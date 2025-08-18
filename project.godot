@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="breakout"
+run/main_scene="uid://0x1nqhd15ujq"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
