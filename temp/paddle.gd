@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Node2D
 # Make the paddle an Area2D or StaticBody2D in the scene; this script only moves the visual Node2D parent.
 # If your collider is a child, the parent motion is enough.
 

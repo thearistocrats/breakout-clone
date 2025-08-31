@@ -1,23 +1,17 @@
-extends RigidBody2D
+extends CharacterBody2D
 
 signal fell_out
 
 @export var speed: float = 520.0
 var dir := Vector2(0, -1).normalized()
-var screen_size: Vector2
 
 func launch() -> void:
-	screen_size = get_viewport_rect().size
 	# slight randomization to avoid straight lines
 	var angle := deg_to_rad(randf_range(-20.0, 20.0))
 	dir = Vector2(0, -1).rotated(angle).normalized()
 
 func _physics_process(delta: float) -> void:
-	var collision = move_and_collide(delta * linear_velocity)
-	
-	if collision:
-		print("Collided with ", collision.get_collider_id())
-	'''
+	var screen := get_viewport_rect().size
 
 	# move and handle collisions with physics bodies (paddle/bricks/walls made of bodies)
 	var motion := dir * speed * delta
@@ -41,13 +35,12 @@ func _physics_process(delta: float) -> void:
 	# manual screen-edge walls (left/right/top). Bottom is out-of-bounds.
 	if global_position.x <= 8 and dir.x < 0:
 		dir.x = -dir.x
-	if global_position.x >= screen_size.x - 8 and dir.x > 0:
+	if global_position.x >= screen.x - 8 and dir.x > 0:
 		dir.x = -dir.x
 	if global_position.y <= 8 and dir.y < 0:
 		dir.y = -dir.y
 
 	# fell out
-	if global_position.y > screen_size.y + 30:
+	if global_position.y > screen.y + 30:
 		emit_signal("fell_out")
 		queue_free()
-'''
