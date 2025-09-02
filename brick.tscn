@@ -1,17 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5kfk1ar3c6px"]
+[gd_scene load_steps=5 format=3 uid="uid://c5kfk1ar3c6px"]
 
 [ext_resource type="Script" uid="uid://cldyneya5fsiy" path="res://brick.gd" id="1_5p85m"]
-[ext_resource type="Texture2D" uid="uid://cdgfktjgfhrth" path="res://assets/brick_sprites/brick sprite01.png" id="1_awxk8"]
+[ext_resource type="Texture2D" uid="uid://bwmulu6y0oi7q" path="res://assets/brick_sprites/brick sprite03.png" id="2_5p85m"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5p85m"]
+friction = 0.0
+bounce = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nkspu"]
 size = Vector2(80, 20)
 
-[node name="Node2D" type="StaticBody2D"]
+[node name="StaticBody2D" type="StaticBody2D" groups=["brick"]]
+physics_material_override = SubResource("PhysicsMaterial_5p85m")
 script = ExtResource("1_5p85m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_awxk8")
+texture = ExtResource("2_5p85m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nkspu")

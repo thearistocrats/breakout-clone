@@ -1,53 +1,17 @@
 extends RigidBody2D
 
-signal fell_out
+var applied_impulse:Vector2
+var prev_velocity:Vector2
 
-@export var speed: float = 520.0
-var dir := Vector2(0, -1).normalized()
-var screen_size: Vector2
+func launch(new_impulse):
+	applied_impulse = new_impulse
+	apply_central_impulse(applied_impulse)
+	prev_velocity = linear_velocity
 
-func launch() -> void:
-	screen_size = get_viewport_rect().size
-	# slight randomization to avoid straight lines
-	var angle := deg_to_rad(randf_range(-20.0, 20.0))
-	dir = Vector2(0, -1).rotated(angle).normalized()
-
-func _physics_process(delta: float) -> void:
-	var collision = move_and_collide(delta * linear_velocity)
-	
-	if collision:
-		print("Collided with ", collision.get_collider_id())
-	'''
-
-	# move and handle collisions with physics bodies (paddle/bricks/walls made of bodies)
-	var motion := dir * speed * delta
-	var collision := move_and_collide(motion)
-	if collision:
-		# reflect direction across the collision normal
-		dir = dir.bounce(collision.get_normal()).normalized()
-
-		# brick hit?
-		var col := collision.get_collider()
-		if is_instance_valid(col) and col.is_in_group("brick"):
-			col.queue_free()
-
-		# paddle hit? tweak bounce based on where we hit the paddle
-		if is_instance_valid(col) and col.is_in_group("paddle"):
-			var local_x := (global_position.x - col.global_position.x)
-			dir.x = clamp(local_x / 80.0, -0.9, 0.9) # 80px half-width tuning
-			dir.y = -abs(dir.y)
-			dir = dir.normalized()
-
-	# manual screen-edge walls (left/right/top). Bottom is out-of-bounds.
-	if global_position.x <= 8 and dir.x < 0:
-		dir.x = -dir.x
-	if global_position.x >= screen_size.x - 8 and dir.x > 0:
-		dir.x = -dir.x
-	if global_position.y <= 8 and dir.y < 0:
-		dir.y = -dir.y
-
-	# fell out
-	if global_position.y > screen_size.y + 30:
-		emit_signal("fell_out")
-		queue_free()
-'''
+var queue_free_scene
+func _physics_process(_delta: float) -> void:
+	if queue_free_scene != null:
+		queue_free_scene.queue_free()
+	var collision = move_and_collide(Vector2.ZERO)
+	if collision && collision.get_collider().is_in_group("brick"):
+		queue_free_scene = collision.get_collider()
