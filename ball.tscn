@@ -1,13 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://byy3iwsxckgv1"]
+[gd_scene load_steps=5 format=3 uid="uid://byy3iwsxckgv1"]
 
 [ext_resource type="Script" uid="uid://cduvxxk7d41nk" path="res://ball.gd" id="1_41u45"]
 [ext_resource type="Texture2D" uid="uid://c0nfac241oym7" path="res://assets/ball_sprites/ball_sprite.png" id="1_x8fbi"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_41u45"]
+friction = 0.0
+bounce = 1.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_cbx31"]
 radius = 21.0
 
-[node name="RigidBody2D" type="RigidBody2D"]
+[node name="RigidBody2D" type="RigidBody2D" groups=["ball"]]
+physics_material_override = SubResource("PhysicsMaterial_41u45")
 gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_41u45")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

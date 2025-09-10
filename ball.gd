@@ -1,17 +1,21 @@
 extends RigidBody2D
 
-var applied_impulse:Vector2
-var prev_velocity:Vector2
+var speed: float = 300.0
+@export var is_launched = false
 
-func launch(new_impulse):
-	applied_impulse = new_impulse
-	apply_central_impulse(applied_impulse)
-	prev_velocity = linear_velocity
+func launch(new_impulse: Vector2) -> void:
+	linear_velocity = Vector2.ZERO
+	linear_damp = 0.0
+	angular_damp = 0.0
+	apply_central_impulse(new_impulse)
 
-var queue_free_scene
-func _physics_process(_delta: float) -> void:
-	if queue_free_scene != null:
-		queue_free_scene.queue_free()
-	var collision = move_and_collide(Vector2.ZERO)
-	if collision && collision.get_collider().is_in_group("brick"):
-		queue_free_scene = collision.get_collider()
+func _physics_process(delta: float) -> void:
+	if linear_velocity.length() > 0:
+		linear_velocity = linear_velocity.normalized() * speed
+
+func _on_body_entered(body: Node) -> void:
+	if body.is_in_group("brick"):
+		body.queue_free()
+	if body.is_in_group("paddle"):
+		var diff_in_velocity = linear_velocity - body._get_velocity()
+		linear_velocity += diff_in_velocity
