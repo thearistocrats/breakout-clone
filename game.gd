@@ -4,6 +4,7 @@ extends Node2D
 @export var ball_scene:PackedScene
 @export var brick_scene:PackedScene
 @export var paddle_scene:PackedScene
+@export var pickup_scene:PackedScene
 
 var paddle:CharacterBody2D
 var bricks = []
@@ -17,6 +18,7 @@ func _ready() -> void:
 	build_bricks()
 	spawn_paddle()
 	spawn_ball()
+	spawn_pickups()
 
 func _process(delta: float) -> void:
 	
@@ -29,16 +31,25 @@ func _process(delta: float) -> void:
 	if !ball.is_launched:
 		ball.position.x = mouse_input.x
 		
-	if Input.is_action_just_pressed("launch"):
+	if Input.is_action_just_pressed("launch") && !ball.is_launched:
 		#respawns the ball, 
 		#for some reason this fixes the issue of the ball teleporting to a random poistion when launched
 		ball.queue_free()
 		ball = ball_scene.instantiate()
 		ball.position = paddle.position
 		ball.position.y -= 40
+		'''
+		signal collided_with_brick(index)
+		signal collided_with_paddle()
+		signal collided_with_pickup(type)
+		'''
+		
+		ball.connect("collided_with_brick", _on_collide_brick)
+		ball.connect("collided_with_paddle", _on_collide_paddle)
 		add_child(ball)
 		
-		var launch_angle = Vector2(randf_range(0,1), randfn(-1,1)*-1)
+		#var launch_angle = Vector2(randf_range(0,1), randfn(-1,1)*-1)
+		var launch_angle = Vector2(1,-1)
 		var launch_speed = 400
 		ball.is_launched = true
 		ball.launch(launch_angle * launch_speed)
@@ -63,13 +74,17 @@ func build_walls() -> void:
 	
 func build_bricks() -> void:
 	var middle = screen_size/12
-	for y in range(12):
-		for x in range(9):
+	for y in range(4):#12
+		var temp_arr = []
+		for x in range(3):#9
 			var new_brick = brick_scene.instantiate()
 			var brick_size = new_brick.get_size()
 			var spawn_position = Vector2(x * (brick_size.x + 40),y * (brick_size.y + 10))
 			new_brick.position = spawn_position + middle
+			new_brick._set_brick(Vector2i(x,y), 0)
 			add_child(new_brick)
+			temp_arr.append(new_brick)
+		bricks.append(temp_arr)
 
 func spawn_paddle():
 	paddle = paddle_scene.instantiate()
@@ -81,3 +96,23 @@ func spawn_ball():
 	ball.position = paddle.position
 	ball.position.y -= 40
 	add_child(ball)
+
+func spawn_pickups():
+	for i in range(3):
+		var spawn_position = Vector2(randf_range(0, screen_size.x), randf_range(0, screen_size.y))
+		var new_pickup = pickup_scene.instantiate()
+		new_pickup.position = spawn_position
+		new_pickup.connect("picked_up", _on_pickup)
+		add_child(new_pickup)
+
+signal bricks_cleared
+func _on_collide_brick(index:Vector2i):
+	bricks[index.y][index.x].queue_free()
+	if bricks.is_empty():
+		bricks_cleared.emit()
+func _on_collide_paddle(paddle):
+	var diff_in_velocity = ball.linear_velocity - paddle._get_velocity()
+	ball.linear_velocity += diff_in_velocity
+func _on_pickup(type, index):
+	print("picked up ", type)
+	#pickup.queue_free()

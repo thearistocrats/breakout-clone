@@ -13,9 +13,14 @@ func _physics_process(delta: float) -> void:
 	if linear_velocity.length() > 0:
 		linear_velocity = linear_velocity.normalized() * speed
 
+signal collided_with_brick(index)
+signal collided_with_paddle(paddle)
+signal collided_with_pickup(type)
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("brick"):
-		body.queue_free()
+		collided_with_brick.emit(body.index)
 	if body.is_in_group("paddle"):
-		var diff_in_velocity = linear_velocity - body._get_velocity()
-		linear_velocity += diff_in_velocity
+		collided_with_paddle.emit(body)
+	if body.is_in_group("pickup"):
+		print("picked up ", body.type)
+		collided_with_pickup.emit(body.type)

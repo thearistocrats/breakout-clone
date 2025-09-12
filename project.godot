@@ -21,6 +21,7 @@ paddle=""
 brick=""
 wall=""
 ball=""
+pickup=""
 
 [input]
 
