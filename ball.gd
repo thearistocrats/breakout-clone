@@ -17,10 +17,12 @@ signal collided_with_brick(index)
 signal collided_with_paddle(paddle)
 signal collided_with_pickup(type)
 func _on_body_entered(body: Node) -> void:
+	if !is_launched: 
+		print("is Lainche5")
+		return
 	if body.is_in_group("brick"):
 		collided_with_brick.emit(body.index)
 	if body.is_in_group("paddle"):
 		collided_with_paddle.emit(body)
 	if body.is_in_group("pickup"):
-		print("picked up ", body.type)
 		collided_with_pickup.emit(body.type)

@@ -16,9 +16,9 @@ func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	build_walls()
 	build_bricks()
+	spawn_pickups()
 	spawn_paddle()
 	spawn_ball()
-	spawn_pickups()
 
 func _process(delta: float) -> void:
 	
@@ -38,11 +38,6 @@ func _process(delta: float) -> void:
 		ball = ball_scene.instantiate()
 		ball.position = paddle.position
 		ball.position.y -= 40
-		'''
-		signal collided_with_brick(index)
-		signal collided_with_paddle()
-		signal collided_with_pickup(type)
-		'''
 		
 		ball.connect("collided_with_brick", _on_collide_brick)
 		ball.connect("collided_with_paddle", _on_collide_paddle)
@@ -103,6 +98,7 @@ func spawn_pickups():
 		var new_pickup = pickup_scene.instantiate()
 		new_pickup.position = spawn_position
 		new_pickup.connect("picked_up", _on_pickup)
+		new_pickup._set_pickup(i)
 		add_child(new_pickup)
 
 signal bricks_cleared
@@ -113,6 +109,9 @@ func _on_collide_brick(index:Vector2i):
 func _on_collide_paddle(paddle):
 	var diff_in_velocity = ball.linear_velocity - paddle._get_velocity()
 	ball.linear_velocity += diff_in_velocity
-func _on_pickup(type, index):
-	print("picked up ", type)
-	#pickup.queue_free()
+func _on_pickup(pickup):
+	print("picked up ", pickup.type)
+	match pickup.type:
+		_:
+			pass
+	pickup.queue_free()
