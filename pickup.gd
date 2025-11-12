@@ -1,4 +1,4 @@
-extends Area2D
+class_name pickup extends Area2D
 
 enum PickupType {
 	WIDEPADDLE,
