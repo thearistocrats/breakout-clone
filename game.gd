@@ -7,6 +7,7 @@ extends Node2D
 @export var pickup_scene:PackedScene
 
 var PickupType = pickup.PickupType
+var BrickType = brick.BrickType
 
 var paddle:CharacterBody2D
 var bricks = []
@@ -20,7 +21,10 @@ func _ready() -> void:
 	build_bricks()
 	spawn_pickups()
 	spawn_paddle()
-	#spawn_ball()
+	
+	var paddle_position = paddle.position
+	paddle_position.y -= 40
+	spawn_ball(paddle.position)
 
 func _process(delta: float) -> void:
 	
@@ -37,13 +41,12 @@ func _process(delta: float) -> void:
 		#respawns the ball, 
 		#for some reason this fixes the issue of the ball teleporting to a random poistion when launched
 		ball.queue_free()
-		ball = ball_scene.instantiate()
-		ball.position = paddle.position
-		ball.position.y -= 40
+		var paddle_position = paddle.position
+		paddle_position.y -= 40
+		spawn_ball(paddle.position)
 		
 		ball.connect("collided_with_brick", _on_collide_brick)
 		ball.connect("collided_with_paddle", _on_collide_paddle)
-		add_child(ball)
 		
 		#var launch_angle = Vector2(randf_range(0,1), randfn(-1,1)*-1)
 		var launch_angle = Vector2(1,-1)
@@ -88,7 +91,7 @@ func spawn_paddle():
 	paddle.position = Vector2(screen_size.x/2, screen_size.y)
 	add_child(paddle)
 	
-func spawn_ball():
+func spawn_ball(position:Vector2i):
 	ball = ball_scene.instantiate()
 	ball.position = paddle.position
 	ball.position.y -= 40

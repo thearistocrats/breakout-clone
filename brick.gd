@@ -1,13 +1,13 @@
-extends StaticBody2D
+class_name brick extends StaticBody2D
 
-enum BrickTypes {
+enum BrickType {
 	BRICK
 }
 
 var index:Vector2i
-var type:BrickTypes
+var type:BrickType
 
-func _set_brick(new_index:Vector2i, new_type:BrickTypes) -> void:
+func _set_brick(new_index:Vector2i, new_type:BrickType) -> void:
 	self.index = new_index
 	self.type = new_type
 
