@@ -6,8 +6,8 @@ extends Node2D
 @export var paddle_scene:PackedScene
 @export var pickup_scene:PackedScene
 
-var PickupType = pickup.PickupType
-var BrickType = brick.BrickType
+var PickupType = Pickup.PickupType
+var BrickType = Brick.BrickType
 
 var paddle:CharacterBody2D
 var bricks = []
@@ -20,6 +20,7 @@ func _ready() -> void:
 	build_walls()
 	build_bricks()
 	spawn_pickups()
+	
 	spawn_paddle()
 	
 	var paddle_position = paddle.position
@@ -91,7 +92,7 @@ func spawn_paddle():
 	paddle.position = Vector2(screen_size.x/2, screen_size.y)
 	add_child(paddle)
 	
-func spawn_ball(position:Vector2i):
+func spawn_ball(spawn_position:Vector2i):
 	ball = ball_scene.instantiate()
 	ball.position = paddle.position
 	ball.position.y -= 40

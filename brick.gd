@@ -1,4 +1,4 @@
-class_name brick extends StaticBody2D
+class_name Brick extends StaticBody2D
 
 enum BrickType {
 	BRICK
