@@ -6,9 +6,12 @@ extends Node2D
 @export var paddle_scene:PackedScene
 @export var pickup_scene:PackedScene
 
+<<<<<<< HEAD
 var PickupType = Pickup.PickupType
 var BrickType = Brick.BrickType
 
+=======
+>>>>>>> parent of 6fd528d (refactor)
 var paddle:CharacterBody2D
 var bricks = []
 var ball:RigidBody2D
@@ -22,10 +25,14 @@ func _ready() -> void:
 	spawn_pickups()
 	
 	spawn_paddle()
+<<<<<<< HEAD
 	
 	var paddle_position = paddle.position
 	paddle_position.y -= 40
 	spawn_ball(paddle.position)
+=======
+	spawn_ball()
+>>>>>>> parent of 6fd528d (refactor)
 
 func _process(delta: float) -> void:
 	
@@ -118,12 +125,6 @@ func _on_collide_paddle(paddle):
 func _on_pickup(pickup):
 	print("picked up ", pickup.type)
 	match pickup.type:
-		PickupType.WIDEPADDLE:
-			pass
-		PickupType.MULTIBALL:
-			pass
-		PickupType.TRIPLEBALL:
-			pass
 		_:
-			print_debug("type ", pickup.type, " not yet implemented")
+			pass
 	pickup.queue_free()
