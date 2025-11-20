@@ -7,6 +7,8 @@
 size = Vector2(320, 20)
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["paddle"]]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_tbytw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -4,6 +4,9 @@ var speed: float = 300.0
 @export var is_launched = false
 
 func launch(new_impulse: Vector2) -> void:
+	set_collision_layer(1)
+	set_collision_mask(1)
+	is_launched = true
 	linear_velocity = Vector2.ZERO
 	linear_damp = 0.0
 	angular_damp = 0.0

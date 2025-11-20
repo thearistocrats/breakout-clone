@@ -6,13 +6,18 @@ extends Node2D
 @export var paddle_scene:PackedScene
 @export var pickup_scene:PackedScene
 
+var BrickTypes = Brick.BrickType
+var PickupType = Pickup.PickupType
+
 var paddle:CharacterBody2D
 var bricks = []
 var ball:RigidBody2D
 
 var screen_size:Vector2
+var is_launched:bool
 
 func _ready() -> void:
+	is_launched = false
 	screen_size = get_viewport_rect().size
 	build_walls()
 	build_bricks()
@@ -32,6 +37,7 @@ func _process(delta: float) -> void:
 		ball.position.x = mouse_input.x
 		
 	if Input.is_action_just_pressed("launch") && !ball.is_launched:
+		is_launched = true
 		#respawns the ball, 
 		#for some reason this fixes the issue of the ball teleporting to a random poistion when launched
 		ball.queue_free()
@@ -48,6 +54,12 @@ func _process(delta: float) -> void:
 		var launch_speed = 400
 		ball.is_launched = true
 		ball.launch(launch_angle * launch_speed)
+func _input(event: InputEvent) -> void:
+	if (event.is_action(&'launch') && !is_launched):
+		launch_ball()
+
+func launch_ball():
+	return
 
 func build_wall(size: Vector2, pos: Vector2) -> Node2D:
 	var wall = wall_scene.instantiate()
@@ -68,7 +80,7 @@ func build_walls() -> void:
 	add_child(left_wall)
 	
 func build_bricks() -> void:
-	var middle = screen_size/12
+	var middle = screen_size/2
 	for y in range(4):#12
 		var temp_arr = []
 		for x in range(3):#9
@@ -110,6 +122,7 @@ func _on_collide_paddle(paddle):
 	var diff_in_velocity = ball.linear_velocity - paddle._get_velocity()
 	ball.linear_velocity += diff_in_velocity
 func _on_pickup(pickup):
+	if !is_launched: return
 	print("picked up ", pickup.type)
 	match pickup.type:
 		_:
