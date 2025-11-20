@@ -14,15 +14,3 @@ ball_scene = ExtResource("2_fc0e3")
 brick_scene = ExtResource("3_7jktm")
 paddle_scene = ExtResource("4_ryrav")
 pickup_scene = ExtResource("6_ryrav")
-
-[node name="TopWall" parent="." instance=ExtResource("2_7jktm")]
-position = Vector2(576, 0)
-scale = Vector2(57.6, 0.01)
-
-[node name="RightWall" parent="." instance=ExtResource("2_7jktm")]
-position = Vector2(1152, 321)
-scale = Vector2(0.1, 32.7)
-
-[node name="LeftWall" parent="." instance=ExtResource("2_7jktm")]
-position = Vector2(0, 321)
-scale = Vector2(0.1, 32.7)

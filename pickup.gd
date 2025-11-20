@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-class_name Pickup extends Area2D
-=======
 extends Area2D
->>>>>>> parent of 6fd528d (refactor)
 
 enum PickupType {
 	WIDEPADDLE,
