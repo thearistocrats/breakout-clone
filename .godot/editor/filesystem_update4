@@ -5,3 +5,4 @@ res://paddle.tscn
 res://brick.tscn
 res://game.gd
 res://pickup.gd
+res://ball.gd

@@ -24,7 +24,6 @@ func _ready() -> void:
 	first_ball = balls[spawn_ball(paddle_position)]
 	build_bricks()
 	spawn_pickups()
-	
 
 func _process(delta: float) -> void:
 	var mouse_input = get_global_mouse_position()
