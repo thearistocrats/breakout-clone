@@ -1,0 +1,34 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1768521079
+ball.gd::GDScript::5026012808433613508::1768519630::0::1::::ball<>RigidBody2D<><>0<>0<><>::
+ball.tscn::PackedScene::4122213543620283852::1768520995::0::1::::<><><>0<>0<><>::uid://cduvxxk7d41nk::::res://ball.gd<>uid://c0nfac241oym7::::res://assets/ball_sprites/ball_sprite.png
+brick.gd::GDScript/GDScript::4786142516371007825::1768438840::0::1::::Brick<>StaticBody2D<><>0<>0<><>::
+brick.tscn::PackedScene::291652925278334004::1768520995::0::1::::<><><>0<>0<><>::uid://cagpckt5y6brt::::res://brick.gd<>uid://bwmulu6y0oi7q::::res://assets/brick_sprites/brick sprite03.png
+field.png::CompressedTexture2D/CompressedTexture2D::5526135840273109390::1768437481::1768437482::1::::<><><>0<>0<>be3f3765c07d48204ace7c4c4c303e03<>res://.godot/imported/field.png-0d581facd3ddc865b8ea0da5ee8fd013.ctex::
+game.gd::GDScript::924486358637700180::1768521011::0::1::::<>Node2D<><>0<>0<><>::
+Game.tscn::PackedScene::1536238623038097870::1768521032::0::1::::<><><>0<>0<><>::uid://nf3fjqiludhk::::res://game.gd<>uid://efjqmd55tmtg::::res://brick.tscn<>uid://byy3iwsxckgv1::::res://ball.tscn<>uid://d22m212cj4oo1::::res://paddle.tscn
+icon.svg::CompressedTexture2D/CompressedTexture2D::2720862981059068951::1763681599::1768438183::1::::<><><>0<>0<>c56ee478c9e49c9ed3b94d3a8416035f<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+paddle.gd::GDScript/GDScript::6063435630987738087::1768438827::0::1::::<>CharacterBody2D<><>0<>0<><>::
+paddle.tscn::PackedScene::9110877256435298598::1768520995::0::1::::<><><>0<>0<><>::uid://csnf5tg4ckvhv::::res://paddle.gd<>uid://crxdtoss44l5v::::res://assets/paddle_sprites/paddle.png
+pickup.gd::GDScript::604493945251674915::1768087261::0::1::::Pickup<>Area2D<><>0<>0<><>::
+pickup.tscn::PackedScene::4234263785234271229::1768521067::0::1::::<><><>0<>0<><>::uid://iu26rti4aapv::::res://pickup.gd<>uid://b0clj6jut3ssx::::res://assets/pickup_assets/long paddle.png<>uid://cmnuuak77sttl::::res://assets/pickup_assets/mult ball.png<>uid://d3dfjndmwt7nk::::res://assets/pickup_assets/triple ball.png
+::res://assets/::1763685422
+::res://assets/ball_sprites/::1763685421
+ball111.png::CompressedTexture2D/CompressedTexture2D::4769140361609414714::1763681599::1763681599::1::::<><><>0<>0<>5c7e1d816942fa143d1c35c6bb55fbc3<>res://.godot/imported/ball111.png-f7db36a8c24ee5b06bec06d63282c9d0.ctex::
+ball_sprite.png::CompressedTexture2D/CompressedTexture2D::6554703102212991112::1763681599::1763681599::1::::<><><>0<>0<>1c798043a6aaeeeb2c0a1a5fa65bbf87<>res://.godot/imported/ball_sprite.png-2af880e86cb81fa4fa554f16d1515c88.ctex::
+::res://assets/brick_sprites/::1763685422
+brick sprite01.png::CompressedTexture2D/CompressedTexture2D::4996116619854021337::1763681599::1763681599::1::::<><><>0<>0<>59f4d9bd4401976ec3cd75f636018330<>res://.godot/imported/brick sprite01.png-bf1720b14d6372ec1956fb8d9ac1217a.ctex::
+brick sprite02.png::CompressedTexture2D/CompressedTexture2D::2042642373408875391::1763681599::1763681599::1::::<><><>0<>0<>29d123c62e74b8ec4ae4fe3d4f901e75<>res://.godot/imported/brick sprite02.png-0936ac54634b512f4f58894feab67bec.ctex::
+brick sprite03.png::CompressedTexture2D/CompressedTexture2D::3956582859847172912::1763681599::1763681599::1::::<><><>0<>0<>12ff76d4e8cd4558783559b08e892720<>res://.godot/imported/brick sprite03.png-3be242c6f1e4b3b6194750aeed91823d.ctex::
+brick sprite04.png::CompressedTexture2D/CompressedTexture2D::8025105971236711190::1763681599::1763681599::1::::<><><>0<>0<>047dcfc79fb24b72b5d221b3bf71fac2<>res://.godot/imported/brick sprite04.png-b517bd8dacea4a528d5c81be69be75ed.ctex::
+::res://assets/paddle_sprites/::1763685422
+paddle.png::CompressedTexture2D/CompressedTexture2D::6013749242629746357::1763681599::1763681599::1::::<><><>0<>0<>5002f27401257c99b71541e2ae30a073<>res://.godot/imported/paddle.png-f0c4f98350abc94f597bb55db1365dbd.ctex::
+::res://assets/pickup_assets/::1763685422
+long paddle.png::CompressedTexture2D/CompressedTexture2D::4145956132279920403::1763681599::1763681599::1::::<><><>0<>0<>d5c30e75e192c336dbd269c2c0d8c1dd<>res://.godot/imported/long paddle.png-710bee2d91a77448ba7ad99fb9864fe9.ctex::
+mult ball.png::CompressedTexture2D/CompressedTexture2D::5643194474524265581::1763681599::1763681599::1::::<><><>0<>0<>cf7c3f3b4bccc2315981e80c83bed8ff<>res://.godot/imported/mult ball.png-fd9a164a25fafaa9025124f1f2126843.ctex::
+triple ball.png::CompressedTexture2D/CompressedTexture2D::9131063151328739452::1763681599::1763681599::1::::<><><>0<>0<>40a08caab5fc4e59aecefe42b303e2a9<>res://.godot/imported/triple ball.png-6535a3f7ffa06c46bf42bcf913140ec4.ctex::
+::res://temp/::1763685422
+ball.gd::GDScript/GDScript::8006575474306675999::1763681599::0::1::::<>CharacterBody2D<><>0<>0<><>::
+brick.gd::GDScript/GDScript::5154831607623714830::1763681599::0::1::::<>Node<><>0<>0<><>::
+game.gd::GDScript/GDScript::2038438953273210565::1763681599::0::1::::<>Node2D<><>0<>0<><>::
+paddle.gd::GDScript/GDScript::5206584933076295514::1763681599::0::1::::<>Node2D<><>0<>0<><>::

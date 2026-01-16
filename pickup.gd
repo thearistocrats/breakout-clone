@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 class_name Pickup extends Area2D
-=======
-extends Area2D
->>>>>>> parent of 6fd528d (refactor)
 
 enum PickupType {
 	WIDEPADDLE,
@@ -18,6 +14,6 @@ func _set_pickup(new_type:PickupType)-> void:
 	$AnimatedSprite2D.frame = self.type
 	
 
-signal picked_up(pickup, index)
+signal picked_up(pickup, collider)
 func _on_body_entered(body: Node2D) -> void:
-	picked_up.emit(self)
+	picked_up.emit(self, body)

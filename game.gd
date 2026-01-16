@@ -1,109 +1,86 @@
 extends Node2D
 
-@export var wall_scene:PackedScene
 @export var ball_scene:PackedScene
 @export var brick_scene:PackedScene
 @export var paddle_scene:PackedScene
 @export var pickup_scene:PackedScene
 
-<<<<<<< HEAD
-var PickupType = Pickup.PickupType
 var BrickType = Brick.BrickType
+var PickupType = Pickup.PickupType
 
-=======
->>>>>>> parent of 6fd528d (refactor)
 var paddle:CharacterBody2D
 var bricks = []
-var ball:RigidBody2D
+var balls = []
+var first_ball:ball
 
 var screen_size:Vector2
+var is_launched:bool
 
 func _ready() -> void:
+	is_launched = false
 	screen_size = get_viewport_rect().size
-	build_walls()
+	spawn_paddle()
+	var paddle_position = Vector2(paddle.position.x, paddle.position.y-40)
+	first_ball = balls[spawn_ball(paddle_position)]
 	build_bricks()
 	spawn_pickups()
 	
-	spawn_paddle()
-<<<<<<< HEAD
-	
-	var paddle_position = paddle.position
-	paddle_position.y -= 40
-	spawn_ball(paddle.position)
-=======
-	spawn_ball()
->>>>>>> parent of 6fd528d (refactor)
 
 func _process(delta: float) -> void:
-	
 	var mouse_input = get_global_mouse_position()
 	
 	paddle.position.x = mouse_input.x
 	paddle.current_velocity = (paddle.position - paddle.prev_pos) / delta
 	paddle.prev_pos = paddle.position
 	
-	if !ball.is_launched:
-		ball.position.x = mouse_input.x
-		
-	if Input.is_action_just_pressed("launch") && !ball.is_launched:
-		#respawns the ball, 
-		#for some reason this fixes the issue of the ball teleporting to a random poistion when launched
-		ball.queue_free()
-		var paddle_position = paddle.position
-		paddle_position.y -= 40
-		spawn_ball(paddle.position)
-		
-		ball.connect("collided_with_brick", _on_collide_brick)
-		ball.connect("collided_with_paddle", _on_collide_paddle)
-		
-		#var launch_angle = Vector2(randf_range(0,1), randfn(-1,1)*-1)
-		var launch_angle = Vector2(1,-1)
-		var launch_speed = 400
-		ball.is_launched = true
-		ball.launch(launch_angle * launch_speed)
-
-func build_wall(size: Vector2, pos: Vector2) -> Node2D:
-	var wall = wall_scene.instantiate()
+	if (!is_launched):
+		first_ball.position.x = paddle.position.x
+		paddle.ready_paddle()
 	
-	var shape = wall.get_node("CollisionShape2D").shape.duplicate()
-	shape.size = size
-	wall.get_node("CollisionShape2D").shape = shape
-	
-	wall.position = pos
-	return wall
-
-func build_walls() -> void:
-	var top_wall = build_wall(Vector2(screen_size.x, 1), Vector2(screen_size.x / 2, 0))
-	add_child(top_wall)
-	var right_wall = build_wall(Vector2(1, screen_size.y), Vector2(screen_size.x, screen_size.y / 2))
-	add_child(right_wall)
-	var left_wall = build_wall(Vector2(1, screen_size.y), Vector2(0, screen_size.y / 2))
-	add_child(left_wall)
+func _input(event: InputEvent) -> void:
+	if (event.is_action(&'launch') && !is_launched):
+		first_ball.queue_free()
+		balls.erase(balls[0])
+		var spawn_position = Vector2(paddle.position.x, paddle.position.y-40)
+		spawn_ball(spawn_position)
+		launch_ball(0)
+		is_launched = true
 	
 func build_bricks() -> void:
-	var middle = screen_size/12
-	for y in range(4):#12
-		var temp_arr = []
-		for x in range(3):#9
+	var middle = screen_size/2
+	var i = 0
+	for y in range(3):#12
+		for x in range(2):#9
 			var new_brick = brick_scene.instantiate()
 			var brick_size = new_brick.get_size()
 			var spawn_position = Vector2(x * (brick_size.x + 40),y * (brick_size.y + 10))
 			new_brick.position = spawn_position + middle
-			new_brick._set_brick(Vector2i(x,y), 0)
+			new_brick._set_brick(i, 0)
 			add_child(new_brick)
-			temp_arr.append(new_brick)
-		bricks.append(temp_arr)
+			bricks.append(new_brick)
+			i += 1
 
 func spawn_paddle():
 	paddle = paddle_scene.instantiate()
 	paddle.position = Vector2(screen_size.x/2, screen_size.y)
 	add_child(paddle)
 	
-func spawn_ball(spawn_position:Vector2i):
-	ball = ball_scene.instantiate()
-	ball.position = paddle.position
-	ball.position.y -= 40
-	add_child(ball)
+func spawn_ball(spawn_position:Vector2) -> int:
+	var new_ball = ball_scene.instantiate()
+	new_ball.position = spawn_position
+	add_child(new_ball)
+	balls.append(new_ball)
+	return balls.size()-1
+
+func launch_ball(i:int):
+	var ball = balls[i]
+	ball.connect("ball_collided_with_brick", _on_ball_collide_brick)
+	ball.connect("ball_collided_with_paddle", _on_ball_collide_paddle)
+	#ball.connect("ball_collided_with_pickup", _on_ball_collide_pickup)
+
+	var launch_angle = Vector2(1,-1)
+	var launch_speed = 400
+	ball.launch(launch_angle * launch_speed)
 
 func spawn_pickups():
 	for i in range(3):
@@ -113,18 +90,49 @@ func spawn_pickups():
 		new_pickup.connect("picked_up", _on_pickup)
 		new_pickup._set_pickup(i)
 		add_child(new_pickup)
-
+		
 signal bricks_cleared
-func _on_collide_brick(index:Vector2i):
-	bricks[index.y][index.x].queue_free()
-	if bricks.is_empty():
+func _on_ball_collide_brick(ball, brick):
+	print("ball ", ball, " collided with ", brick)
+	brick.queue_free()
+	bricks.erase(brick)
+	if bricks.size() == 0:
 		bricks_cleared.emit()
-func _on_collide_paddle(paddle):
+	print("bricks_remaining, ", bricks.size())
+func _on_ball_collide_paddle(ball, paddle):
 	var diff_in_velocity = ball.linear_velocity - paddle._get_velocity()
 	ball.linear_velocity += diff_in_velocity
-func _on_pickup(pickup):
+	
+func _on_pickup(pickup, collider):
+	if !is_launched: return
 	print("picked up ", pickup.type)
+	if (collider.is_in_group("paddle")):
+		pass
+	if (collider.is_in_group("paddle")):
+		pass
 	match pickup.type:
+		PickupType.WIDEPADDLE:
+			paddle.scale.x *= 2
+			start_wide_paddle_timer()
+		PickupType.MULTIBALL:
+			for ball in balls:
+				call_deferred("spawn_multiball", ball.position)
+		PickupType.TRIPLEBALL:
+			call_deferred("spawn_tripleball", paddle.position)
 		_:
-			pass
+			print_debug(pickup.type, "not yet implemented")
 	pickup.queue_free()
+
+func start_wide_paddle_timer():
+	await get_tree().create_timer(4).timeout
+	paddle.scale.x /= 2
+
+func spawn_multiball(spawn_position: Vector2) -> void:
+	for i in range(3):
+		var index = spawn_ball(spawn_position)
+		launch_ball(index)
+
+func spawn_tripleball(spawn_position: Vector2) -> void:
+	for i in range(3):
+		var index = spawn_ball(spawn_position)
+		launch_ball(index)

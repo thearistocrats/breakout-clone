@@ -1,0 +1,7 @@
+res://pickup.tscn
+res://Game.tscn
+res://ball.tscn
+res://paddle.tscn
+res://brick.tscn
+res://game.gd
+res://pickup.gd

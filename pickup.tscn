@@ -1,7 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1ldyabb1ra42"]
+[gd_scene load_steps=7 format=3 uid="uid://b1ldyabb1ra42"]
 
-[ext_resource type="Script" uid="uid://dfc4m2prjwbhf" path="res://pickup.gd" id="1_tm65s"]
-[ext_resource type="SpriteFrames" uid="uid://cuw7atd2urjxt" path="res://pickup_sprite_frames.tres" id="2_clep7"]
+[ext_resource type="Script" uid="uid://iu26rti4aapv" path="res://pickup.gd" id="1_tm65s"]
+[ext_resource type="Texture2D" uid="uid://b0clj6jut3ssx" path="res://assets/pickup_assets/long paddle.png" id="2_0tmqx"]
+[ext_resource type="Texture2D" uid="uid://cmnuuak77sttl" path="res://assets/pickup_assets/mult ball.png" id="3_bwgqt"]
+[ext_resource type="Texture2D" uid="uid://d3dfjndmwt7nk" path="res://assets/pickup_assets/triple ball.png" id="4_jv4fb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjqjo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0tmqx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bwgqt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jv4fb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_clep7"]
 radius = 22.0907
@@ -10,7 +29,7 @@ radius = 22.0907
 script = ExtResource("1_tm65s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("2_clep7")
+sprite_frames = SubResource("SpriteFrames_wjqjo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_clep7")

@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5kfk1ar3c6px"]
+[gd_scene load_steps=5 format=3 uid="uid://efjqmd55tmtg"]
 
-[ext_resource type="Script" uid="uid://cldyneya5fsiy" path="res://brick.gd" id="1_5p85m"]
-[ext_resource type="Texture2D" uid="uid://bwmulu6y0oi7q" path="res://assets/brick_sprites/brick sprite03.png" id="2_5p85m"]
+[ext_resource type="Script" uid="uid://cagpckt5y6brt" path="res://brick.gd" id="1_5p85m"]
+[ext_resource type="Texture2D" uid="uid://bwmulu6y0oi7q" path="res://assets/brick_sprites/brick sprite03.png" id="2_mt0q5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5p85m"]
 friction = 0.0
@@ -16,7 +16,7 @@ script = ExtResource("1_5p85m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_5p85m")
+texture = ExtResource("2_mt0q5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nkspu")
